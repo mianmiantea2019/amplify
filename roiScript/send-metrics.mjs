@@ -15,11 +15,17 @@ const notion = new Client({
 const databaseId = NOTION_DATABASE_ID;
 
 // mock data to test the connection 
-const newData = {
-  issue_id: '2', // (~)
-  // gh_handle: 'Dunridge', // TODO: in the Notion db this is of type title, see what format to use in the code  
+const newData = { // properties: 
+  issue_id: {
+    rich_text: [
+      {
+        text: {
+          content: '2'
+        }
+      }
+    ] 
+  }, 
   gh_handle: {
-    // id: '1', // TODO: try a temporary fix, DELETE afterwards (didn't work)
     title: [
       {
         text: {
@@ -28,7 +34,9 @@ const newData = {
       },
     ],
   }, 
-  duration: 15 // (~)
+  duration: {
+    number: 15
+  }
 };
 
 async function addToNotionDatabase() {
@@ -39,6 +47,7 @@ async function addToNotionDatabase() {
       },
       properties: newData,
     });
+    console.log(response);
   } catch (error) {
     console.error('Error adding data to Notion:', error);
   }
